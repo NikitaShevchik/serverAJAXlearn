@@ -116,18 +116,59 @@ let input1 = document.querySelector('[name="num1"]');
 let input2 = document.querySelector('[name="num2"]');
 let input3 = document.querySelector('[name="num3"]');
 
+// form.addEventListener('submit', function (event) {
+//     let searchParams = new URLSearchParams();
+
+//     console.log(searchParams)
+
+//     searchParams.set('num1', input1.value);
+//     searchParams.set('num2', input2.value);
+//     searchParams.set('num3', input3.value);
+
+//     let path = '/handler/?' + searchParams.toString();
+
+//     fetch(path).then(response => response.text()).then(text => div.innerHTML = text)
+
+//     event.preventDefault()
+// })
+
+
 form.addEventListener('submit', function (event) {
-    let searchParams = new URLSearchParams();
+    let promise = fetch('/handler/', {
+        method: 'POST',
+        body: new FormData(this),
+    }).then(
+        response => {
+            return response.text(); // ответ сервера
+        }
+    ).then(
+        text => {
+            div.innerHTML = text;
+        }
+    );
 
-    console.log(searchParams)
+    event.preventDefault();
+});
 
-    searchParams.set('num1', input1.value);
-    searchParams.set('num2', input2.value);
-    searchParams.set('num3', input3.value);
 
-    let path = '/handler/?' + searchParams.toString();
+// Отправка данных без формы
 
-    fetch(path).then(response => response.text()).then(text => div.innerHTML = text)
 
-    event.preventDefault()
-})
+// С помощью цикла сформируйте из этого объекта объект formData и отправьте его на сервер методом POST.
+
+let formData = new FormData();
+let obj = {
+    a: 1,
+    b: 2,
+    c: 3
+}
+for (let k in obj) {
+    formData.set(k, obj[k])
+}
+// formData.set('num1', '15');
+// formData.set('num2', '23');
+
+let promise = fetch('/handler/', {
+    method: 'POST',
+    body: formData,
+});
