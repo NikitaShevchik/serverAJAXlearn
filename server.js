@@ -10,8 +10,16 @@
 //     }
 // }
 let array = ['nikita', 'ivan', 'andrew', 'grisha']
+
+// export default {
+//     '/handler/': function ({ get }) {
+//         return array[Number(get.num)];
+//     }
+// }
+
 export default {
     '/handler/': function ({ get }) {
-        return array[Number(get.num)];
+        console.log(get)
+        return Number(get.num1) + Number(get.num2) + Number(get.num3)
     }
 }

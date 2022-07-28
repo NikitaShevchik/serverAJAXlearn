@@ -96,14 +96,38 @@ let button = document.querySelector('button');
 // возвращает элемент массива, соответствующий этому числу.
 // По нажатию на кнопку передайте на сервер некоторое число, а ответ сервера выведите в абзац.
 
-button.addEventListener('click', function () {
-    fetch('/handler/?num=2').then(
-        response => {
-            return response.text();
-        }
-    ).then(
-        text => {
-            div.innerHTML = text; // запишем ответ сервера
-        }
-    );
-});
+// button.addEventListener('click', function () {
+//     fetch('/handler/?num=2').then(
+//         response => {
+//             return response.text();
+//         }
+//     ).then(
+//         text => {
+//             div.innerHTML = text; // запишем ответ сервера
+//         }
+//     );
+// });
+
+
+// Отправка форм методом GET через AJAX
+let form = document.querySelector('form')
+
+let input1 = document.querySelector('[name="num1"]');
+let input2 = document.querySelector('[name="num2"]');
+let input3 = document.querySelector('[name="num3"]');
+
+form.addEventListener('submit', function (event) {
+    let searchParams = new URLSearchParams();
+
+    console.log(searchParams)
+
+    searchParams.set('num1', input1.value);
+    searchParams.set('num2', input2.value);
+    searchParams.set('num3', input3.value);
+
+    let path = '/handler/?' + searchParams.toString();
+
+    fetch(path).then(response => response.text()).then(text => div.innerHTML = text)
+
+    event.preventDefault()
+})
