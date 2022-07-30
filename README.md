@@ -1,0 +1,3 @@
+# serverAJAXlearn
+
+Учим fetch
